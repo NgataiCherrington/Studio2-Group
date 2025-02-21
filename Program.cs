@@ -7,6 +7,10 @@ namespace MCNR
     public class Menu
     {
         int tasks;
+        // finish main menu
+        // add ascii art
+        // make  a map
+        
 
         
     }

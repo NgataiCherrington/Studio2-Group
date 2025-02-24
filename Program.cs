@@ -32,32 +32,32 @@ namespace MCNR
             do
             {
                 Console.Clear();
-                Console.WriteLine("title");
+                Console.WriteLine("    ██████                                 █████          ██████                         █████    █████              \r\n  ███░░░░███                              ░░███          ███░░███                       ░░███    ░░███               \r\n ███    ░░███ █████ ████  ██████   █████  ███████       ░███ ░░░   ██████  ████████     ███████   ░███████    ██████ \r\n░███     ░███░░███ ░███  ███░░███ ███░░  ░░░███░       ███████    ███░░███░░███░░███   ░░░███░    ░███░░███  ███░░███\r\n░███   ██░███ ░███ ░███ ░███████ ░░█████   ░███       ░░░███░    ░███ ░███ ░███ ░░░      ░███     ░███ ░███ ░███████ \r\n░░███ ░░████  ░███ ░███ ░███░░░   ░░░░███  ░███ ███     ░███     ░███ ░███ ░███          ░███ ███ ░███ ░███ ░███░░░  \r\n ░░░██████░██ ░░████████░░██████  ██████   ░░█████      █████    ░░██████  █████         ░░█████  ████ █████░░██████ \r\n   ░░░░░░ ░░   ░░░░░░░░  ░░░░░░  ░░░░░░     ░░░░░      ░░░░░      ░░░░░░  ░░░░░           ░░░░░  ░░░░ ░░░░░  ░░░░░░  \r\n                                                                                                                     \r\n                                                                                                                     \r\n                                                                                                                     \r\n █████                         █████       █████   ████  ███                          █████                          \r\n░░███                         ░░███       ░░███   ███░  ░░░                          ░░███                           \r\n ░███         ██████   █████  ███████      ░███  ███    ████  ████████    ███████  ███████   ██████  █████████████   \r\n ░███        ███░░███ ███░░  ░░░███░       ░███████    ░░███ ░░███░░███  ███░░███ ███░░███  ███░░███░░███░░███░░███  \r\n ░███       ░███ ░███░░█████   ░███        ░███░░███    ░███  ░███ ░███ ░███ ░███░███ ░███ ░███ ░███ ░███ ░███ ░███  \r\n ░███      █░███ ░███ ░░░░███  ░███ ███    ░███ ░░███   ░███  ░███ ░███ ░███ ░███░███ ░███ ░███ ░███ ░███ ░███ ░███  \r\n ███████████░░██████  ██████   ░░█████     █████ ░░████ █████ ████ █████░░███████░░████████░░██████  █████░███ █████ \r\n░░░░░░░░░░░  ░░░░░░  ░░░░░░     ░░░░░     ░░░░░   ░░░░ ░░░░░ ░░░░ ░░░░░  ░░░░░███ ░░░░░░░░  ░░░░░░  ░░░░░ ░░░ ░░░░░  \r\n                                                                         ███ ░███                                    \r\n                                                                        ░░██████                                     \r\n                                                                         ░░░░░░                                      ");
                 Console.ResetColor();
                 Console.WriteLine("1. Play game \n\n2. Instructions \n\n3. Options \n\n4. Credits \n\n0. Exit game");
                 input = Convert.ToInt32(Console.ReadLine());
                 Console.Clear();
 
-                switch (tasks)
+                switch (input)
                 {
 
                     case 1:
 
-                        introduction();
+                        Main();
                         break;
 
                     case 2:
 
-                        task2();
+                        instructions();
                         break;
 
                     case 3:
 
-                        task3();
+                        options();
                         break;
                     case 4:
 
-                        task4();
+                        credits();
                         break;
 
                     case 0:
@@ -69,6 +69,24 @@ namespace MCNR
 
 
             } while (input != 0);
+        }
+
+        static void instructions()
+        {
+
+        }
+
+        static void options()
+        {
+
+        }
+        static void credits()
+        {
+
+        }
+        static void exit()
+        {
+
         }
 
         //*****PLAYER NAME METHOD*****//
@@ -220,7 +238,7 @@ namespace MCNR
         //*****MAIN METHOD*****//
         static void Main(string[] args)
         {
-            
+
             //InitializeInventory();
             //PrintInventory();
             //Introduction();
@@ -257,6 +275,7 @@ namespace MCNR
 
 
             // ========= ACTUAL FLOW OF THE GAME FOR MAIN ========= //
+            Menu();
             Introduction();
             Tutorial();               // missing tutorial for using inventory and using potions
             EnteringTownAnimation();

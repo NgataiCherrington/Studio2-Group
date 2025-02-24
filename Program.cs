@@ -1,21 +1,14 @@
 ﻿using System.ComponentModel;
 using System.Data.SqlTypes;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 
 namespace MCNR
 {
-    public class Menu
-    {
-        int tasks;
-        // finish main menu
-        // add ascii art
-        // make  a map
-        
-
-        
-    }
+    
     internal class Program
     {
+         
         //ARRAY FOR INVENTORIES
         static string[] items = new string[15];
         static int[] counts = new int[15];
@@ -30,8 +23,56 @@ namespace MCNR
         static int correct = 0;
         public static Player player;
 
+        // MENU
+
+        static void Menu()
+        {
+            int input;
+
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("title");
+                Console.ResetColor();
+                Console.WriteLine("1. Play game \n\n2. Instructions \n\n3. Options \n\n4. Credits \n\n0. Exit game");
+                input = Convert.ToInt32(Console.ReadLine());
+                Console.Clear();
+
+                switch (tasks)
+                {
+
+                    case 1:
+
+                        introduction();
+                        break;
+
+                    case 2:
+
+                        task2();
+                        break;
+
+                    case 3:
+
+                        task3();
+                        break;
+                    case 4:
+
+                        task4();
+                        break;
+
+                    case 0:
+                        Console.WriteLine("Exit");
+                        break;
+
+                }
+
+
+
+            } while (input != 0);
+        }
+
         //*****PLAYER NAME METHOD*****//
- 
+
         public class Player
         {
             public string Name { get; set; }

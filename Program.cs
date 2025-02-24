@@ -169,7 +169,7 @@ namespace MCNR
         //*****MAIN METHOD*****//
         static void Main(string[] args)
         {
-            
+
             //InitializeInventory();
             //PrintInventory();
             //Introduction();
@@ -206,6 +206,7 @@ namespace MCNR
 
 
             // ========= ACTUAL FLOW OF THE GAME FOR MAIN ========= //
+            DeathScreen();
             Introduction();
             Tutorial();               // missing tutorial for using inventory and using potions
             EnteringTownAnimation();
@@ -423,11 +424,7 @@ namespace MCNR
                 if (playerHP <= 0) //player dies
                 {
                     Console.Beep(400, 500);
-                    Console.WriteLine("You have fallen in battle. <enter>");
-                    Console.ReadLine();
-                    Console.WriteLine("G A M E O V E R <enter>");
-                    Console.ReadLine();
-                    Environment.Exit(0);  //stop program
+                    DeathScreen();
                 }
 
                 string[] tutorialInventoryDialogue2 = new string[]
@@ -2233,6 +2230,49 @@ namespace MCNR
 
                     // Once enemy or player dies, stops loop
                 } while (bossHP > 0 && playerHP > 0);
+            }
+
+            static void DeathScreen()
+            {
+                
+                string deathTitle = @" #     # ####### #     #    ######  ### ####### ######  
+  #   #  #     # #     #    #     #  #  #       #     # 
+   # #   #     # #     #    #     #  #  #       #     # 
+    #    #     # #     #    #     #  #  #####   #     # 
+    #    #     # #     #    #     #  #  #       #     # 
+    #    #     # #     #    #     #  #  #       #     # 
+    #    #######  #####     ######  ### ####### ######  
+";
+
+                Console.WriteLine(deathTitle);
+
+                Console.WriteLine("\nWould you like to...\n");
+                string[] deathMenu = new string[]
+                {
+                    "1. Return to the Main Menu.",
+                    "2. Return to last checkpoint.",
+                    "3. Exit console."
+                };
+
+                foreach (string death in deathMenu)
+                {
+                    Console.WriteLine(death);
+                }
+
+                Console.Write("\nEnter choice here: ");
+                string input = "";
+                input = Console.ReadLine();
+
+                switch(input)
+                {
+                    case "1":
+                        break;
+                    case "2":
+                        break;
+                    case "3":
+                        break;
+                }
+
             }
 
             static void Win()

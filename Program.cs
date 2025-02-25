@@ -9,6 +9,8 @@ namespace MCNR
         //ARRAY FOR INVENTORIES
         static string[] items = new string[15];
         static int[] counts = new int[15];
+
+        //inventory variables
         static int money = 0;
         static int enemyHP;
         static int playerHP;
@@ -18,21 +20,13 @@ namespace MCNR
         static int crystalflower = 0;
         static int specialsword = 0;
         static int correct = 0;
-        public static Player player;
+        
 
         //*****PLAYER NAME METHOD*****//
- 
-        public class Player
-        {
-            public string Name { get; set; }
-
-            public Player(string name)
-            {
-                Name = name;
-            }
-        }
+        //THIS NEEDS TO BE WORKED ON//
+        private static string playersName;
         //**************************************************//
-            //*****HEALTH POTION METHODS*****//
+            //*****POTION METHODS*****//
             public class StrengthPotion
         {
             public string name { get; set; }
@@ -169,50 +163,13 @@ namespace MCNR
         //*****MAIN METHOD*****//
         static void Main(string[] args)
         {
-
-            //InitializeInventory();
-            //PrintInventory();
-            //Introduction();
-            //Tutorial();
-            //InitializeInventory();
-            //PrintInventory();
-            //Introduction();
-            //Tutorial();
-
-            //EnteringTownAnimation();
-            //Town();
-
-
-            //EldrinDialogue();
-
-
-
-            ////CavePath1OrPath2();
-            ////CaveEnemyPath1();
-            //CaveExitOrPath3();
-            //CaveEnemyPath3();
-            //////SpecialSword();
-            //SpecialSwordDialogue();
-            //EscapeCave();
-            //EscapeCaveDialogue();
-
-            //ForestPath1OrPath2();
-            //ForestEnemyPath1();
-            //ForestExitOrPath3();
-            //ForestEnemyPath3();
-            //SpecialFlower();
-            //Exit();
-
-
-
+            
             // ========= ACTUAL FLOW OF THE GAME FOR MAIN ========= //
-            DeathScreen();
             Introduction();
             Tutorial();               // missing tutorial for using inventory and using potions
             EnteringTownAnimation();
             Town();
             EldrinDialogue();
-            //TutorialUsingPotionAndInventory();
 
 
 
@@ -365,8 +322,7 @@ namespace MCNR
 
                 //storyline intro
                 Console.Write("Please Enter Your Name: ");
-                string playersName = Console.ReadLine();
-                Player player = new Player(playersName);
+                playersName = Console.ReadLine();
                 Console.Clear();
 
                 string[] introDialogue = new string[]
@@ -1033,7 +989,7 @@ namespace MCNR
             {
                 string[] NPCDialogue = new string[]
                 {
-                    $"[Eldrin the wise]: Ahh, Hello {player.Name}...",
+                    $"[Eldrin the wise]: Ahh, Hello {playersName}...",
                     "\n\tYou have explored the Town of Eldoria...",
                     "\tFor your next quest...",
                     "\tYou must explore the Cave...",
@@ -1094,7 +1050,7 @@ namespace MCNR
             {
                 string[] NPCDialogue = new string[]
                 {
-                    $"Eldrin the wise: Hello again {player.Name}...",
+                    $"Eldrin the wise: Hello again {playersName}...",
                     "Are you now ready to face maybe...",
                     "Your toughest opponent yet?..."
                 };

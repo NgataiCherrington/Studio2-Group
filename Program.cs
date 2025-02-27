@@ -32,7 +32,12 @@ namespace MCNR
                 Name = name;
             }
         }
-        // CheckpointManager handles saving/loading all three checkpoints in one file.
+        //***************************************************************//
+        //*******************  CHECKPOINT SAVE SYSTEM  ******************//
+        //***************************************************************//
+        // STILL NEED TO EDIT THE STATIC VOIDS FOR THE LOCATIONS TO IMPLEMENT THE SAVE FEATURE //
+
+        // CheckpointManager handles saving/loading all three checkpoints 
         public static class CheckpointManager
         {
             private static readonly string checkpointFile = "checkpoints.json";

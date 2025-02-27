@@ -31,7 +31,28 @@ namespace MCNR
                 Name = name;
             }
         }
-        //**************************************************//
+        // CheckpointManager handles saving/loading all three checkpoints in one file.
+        public static class CheckpointManager
+        {
+            private static readonly string checkpointFile = "checkpoints.json";
+
+            // This class defines the game state to be saved.
+            public class CheckpointState
+            {
+                public int Money { get; set; }
+                public int EnemyHP { get; set; }
+                public int PlayerHP { get; set; }
+                public int Ore { get; set; }
+                public int Flower { get; set; }
+                public int Potion { get; set; }
+                public int CrystalFlower { get; set; }
+                public int SpecialSword { get; set; }
+                public int Correct { get; set; }
+                public string[] Items { get; set; }
+                public int[] Counts { get; set; }
+                public string PlayerName { get; set; }
+            }
+            //**************************************************//
             //*****HEALTH POTION METHODS*****//
             public class StrengthPotion
         {

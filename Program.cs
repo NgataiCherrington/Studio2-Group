@@ -81,9 +81,45 @@ namespace MCNR
                 Console.WriteLine($"Checkpoint {slot} saved!");
                 Console.ReadLine();
             }
-            //**************************************************//
-            //*****HEALTH POTION METHODS*****//
-            public class StrengthPotion
+
+            // Loads and returns the checkpoint state from the specified slot (1-3)
+            public static CheckpointState LoadCheckpoint(int slot)
+            {
+                if (slot < 1 || slot > 3)
+                {
+                    Console.WriteLine("Invalid checkpoint slot. Choose 1, 2, or 3.");
+                    return null;
+                }
+                if (!File.Exists(checkpointFile))
+                {
+                    Console.WriteLine("No checkpoints have been saved yet.");
+                    Console.ReadLine();
+                    return null;
+                }
+                string json = File.ReadAllText(checkpointFile);
+                var checkpoints = JsonSerializer.Deserialize<CheckpointState[]>(json);
+                if (checkpoints == null || checkpoints.Length != 3)
+                {
+                    Console.WriteLine("Error loading checkpoints.");
+                    Console.ReadLine();
+                    return null;
+                }
+                CheckpointState state = checkpoints[slot - 1];
+                if (state == null)
+                {
+                    Console.WriteLine($"No checkpoint found in slot {slot}.");
+                }
+                else
+                {
+                    Console.WriteLine($"Checkpoint {slot} loaded!");
+                }
+                Console.ReadLine();
+                return state;
+            }
+        }
+        //**************************************************//
+        //*****HEALTH POTION METHODS*****//
+        public class StrengthPotion
         {
             public string name { get; set; }
             public int increaseAmount { get; set; }

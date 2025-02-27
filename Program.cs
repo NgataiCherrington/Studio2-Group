@@ -117,6 +117,26 @@ namespace MCNR
                 return state;
             }
         }
+        // saves the adventurers stuff and game progress HOPEFULLY
+        static void SaveCurrentCheckpoint(int slot)
+        {
+            var state = new CheckpointManager.CheckpointState
+            {
+                Money = money,
+                EnemyHP = enemyHP,
+                PlayerHP = playerHP,
+                Ore = ore,
+                Flower = flower,
+                Potion = potion,
+                CrystalFlower = crystalflower,
+                SpecialSword = specialsword,
+                Correct = correct,
+                Items = items,
+                Counts = counts,
+                PlayerName = player?.Name ?? ""
+            };
+            CheckpointManager.SaveCheckpoint(slot, state);
+        }
         //**************************************************//
         //*****HEALTH POTION METHODS*****//
         public class StrengthPotion

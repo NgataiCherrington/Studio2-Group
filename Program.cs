@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Data.SqlTypes;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.Json;
 
 namespace MCNR
 {
@@ -51,6 +52,34 @@ namespace MCNR
                 public string[] Items { get; set; }
                 public int[] Counts { get; set; }
                 public string PlayerName { get; set; }
+            }
+            // Saves the game state into the specified slot (1-3) HOPEFULLY NEEDS TESTING
+            public static void SaveCheckpoint(int slot, CheckpointState state)
+            {
+                if (slot < 1 || slot > 3)
+                {
+                    Console.WriteLine("Invalid checkpoint slot. Choose 1, 2, or 3.");
+                    return;
+                }
+
+                // Load existing checkpoints or create a new array 
+                CheckpointState[] checkpoints = new CheckpointState[3];
+                if (File.Exists(checkpointFile))
+                {
+                    string jsonExisting = File.ReadAllText(checkpointFile);
+                    var loaded = JsonSerializer.Deserialize<CheckpointState[]>(jsonExisting);
+                    if (loaded != null && loaded.Length == 3)
+                    {
+                        checkpoints = loaded;
+                    }
+                }
+
+                // Save the state in the slot (array index slot-1)
+                checkpoints[slot - 1] = state;
+                string json = JsonSerializer.Serialize(checkpoints);
+                File.WriteAllText(checkpointFile, json);
+                Console.WriteLine($"Checkpoint {slot} saved!");
+                Console.ReadLine();
             }
             //**************************************************//
             //*****HEALTH POTION METHODS*****//

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Data.SqlTypes;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.Json;
 
 namespace MCNR
 {
@@ -31,9 +32,119 @@ namespace MCNR
                 Name = name;
             }
         }
+        //***************************************************************//
+        //*******************  CHECKPOINT SAVE SYSTEM  ******************//
+        //***************************************************************//
+        // STILL NEED TO EDIT THE STATIC VOIDS FOR THE LOCATIONS TO IMPLEMENT THE SAVE FEATURE //
+
+        // CheckpointManager handles saving/loading all three checkpoints 
+        public static class CheckpointManager
+        {
+            private static readonly string checkpointFile = "checkpoints.json";
+
+            // This class defines the game state to be saved.
+            public class CheckpointState
+            {
+                public int Money { get; set; }
+                public int EnemyHP { get; set; }
+                public int PlayerHP { get; set; }
+                public int Ore { get; set; }
+                public int Flower { get; set; }
+                public int Potion { get; set; }
+                public int CrystalFlower { get; set; }
+                public int SpecialSword { get; set; }
+                public int Correct { get; set; }
+                public string[] Items { get; set; }
+                public int[] Counts { get; set; }
+                public string PlayerName { get; set; }
+            }
+            // Saves the game state into the specified slot (1-3) HOPEFULLY NEEDS TESTING
+            public static void SaveCheckpoint(int slot, CheckpointState state)
+            {
+                if (slot < 1 || slot > 3)
+                {
+                    Console.WriteLine("Invalid checkpoint slot. Choose 1, 2, or 3.");
+                    return;
+                }
+
+                // Load existing checkpoints or create a new array 
+                CheckpointState[] checkpoints = new CheckpointState[3];
+                if (File.Exists(checkpointFile))
+                {
+                    string jsonExisting = File.ReadAllText(checkpointFile);
+                    var loaded = JsonSerializer.Deserialize<CheckpointState[]>(jsonExisting);
+                    if (loaded != null && loaded.Length == 3)
+                    {
+                        checkpoints = loaded;
+                    }
+                }
+
+                // Save the state in the slot (array index slot-1)
+                checkpoints[slot - 1] = state;
+                string json = JsonSerializer.Serialize(checkpoints);
+                File.WriteAllText(checkpointFile, json);
+                Console.WriteLine($"Checkpoint {slot} saved!");
+                Console.ReadLine();
+            }
+
+            // Loads and returns the checkpoint state from the specified slot (1-3)
+            public static CheckpointState LoadCheckpoint(int slot)
+            {
+                if (slot < 1 || slot > 3)
+                {
+                    Console.WriteLine("Invalid checkpoint slot. Choose 1, 2, or 3.");
+                    return null;
+                }
+                if (!File.Exists(checkpointFile))
+                {
+                    Console.WriteLine("No checkpoints have been saved yet.");
+                    Console.ReadLine();
+                    return null;
+                }
+                string json = File.ReadAllText(checkpointFile);
+                var checkpoints = JsonSerializer.Deserialize<CheckpointState[]>(json);
+                if (checkpoints == null || checkpoints.Length != 3)
+                {
+                    Console.WriteLine("Error loading checkpoints.");
+                    Console.ReadLine();
+                    return null;
+                }
+                CheckpointState state = checkpoints[slot - 1];
+                if (state == null)
+                {
+                    Console.WriteLine($"No checkpoint found in slot {slot}.");
+                }
+                else
+                {
+                    Console.WriteLine($"Checkpoint {slot} loaded!");
+                }
+                Console.ReadLine();
+                return state;
+            }
+        }
+        // saves the adventurers stuff and game progress HOPEFULLY
+        static void SaveCurrentCheckpoint(int slot)
+        {
+            var state = new CheckpointManager.CheckpointState
+            {
+                Money = money,
+                EnemyHP = enemyHP,
+                PlayerHP = playerHP,
+                Ore = ore,
+                Flower = flower,
+                Potion = potion,
+                CrystalFlower = crystalflower,
+                SpecialSword = specialsword,
+                Correct = correct,
+                Items = items,
+                Counts = counts,
+                PlayerName = player?.Name ?? ""
+            };
+            CheckpointManager.SaveCheckpoint(slot, state);
+        }
         //**************************************************//
-            //*****HEALTH POTION METHODS*****//
-            public class StrengthPotion
+        //*****HEALTH POTION METHODS*****//
+        public class StrengthPotion
         {
             public string name { get; set; }
             public int increaseAmount { get; set; }

@@ -338,6 +338,8 @@ namespace MCNR
                 {
                     //prompt player to attack or check inventory
                     Console.Write("Press 'A' to strike or 'I' to check your inventory: ");
+
+                    Console.WriteLine($"\nYour HP: {playerHP}\nEnemy HP: {enemyHP}");
                     string input = Console.ReadLine();
 
                     char choice = ' '; //declare choice outside of the input check
@@ -360,8 +362,8 @@ namespace MCNR
                         switch (hitmiss)
                         {
                             case 1:
-                                Console.WriteLine($"Enemy HP: {enemyHP}");
-                                Console.WriteLine($"Your HP: {playerHP}");
+                                //Console.WriteLine($"Enemy HP: {enemyHP}");
+                                //Console.WriteLine($"Your HP: {playerHP}");
                                 Console.WriteLine("Your swing goes wide, missing the enemy entirely!");
                                 Console.WriteLine("0 damage\n");
                                 Console.WriteLine("The enemy retaliates!\n");
@@ -369,8 +371,8 @@ namespace MCNR
                                 break;
                             case 2:
                                 enemyHP -= 5;
-                                Console.WriteLine($"Enemy HP: {enemyHP}");
-                                Console.WriteLine($"Your HP: {playerHP}");
+                                //Console.WriteLine($"Enemy HP: {enemyHP}");
+                                //Console.WriteLine($"Your HP: {playerHP}");
                                 Console.WriteLine("You strike true!");
                                 Console.WriteLine("5 damage dealt!\n");
                                 Console.WriteLine("The enemy retaliates!\n");
@@ -378,8 +380,8 @@ namespace MCNR
                                 break;
                             case 3:
                                 enemyHP -= 10;
-                                Console.WriteLine($"Enemy HP: {enemyHP}");
-                                Console.WriteLine($"Your HP: {playerHP}");
+                                //Console.WriteLine($"Enemy HP: {enemyHP}");
+                                //Console.WriteLine($"Your HP: {playerHP}");
                                 Console.WriteLine("A fierce blow!");
                                 Console.WriteLine("10 damage dealt!\n");
                                 Console.WriteLine("The enemy retaliates!\n");
@@ -387,8 +389,8 @@ namespace MCNR
                                 break;
                             default:
                                 enemyHP -= 2;
-                                Console.WriteLine($"Enemy HP: {enemyHP}");
-                                Console.WriteLine($"Your HP: {playerHP}");
+                                //Console.WriteLine($"Enemy HP: {enemyHP}");
+                                //Console.WriteLine($"Your HP: {playerHP}");
                                 Console.WriteLine("You landed a glancing blow.");
                                 Console.WriteLine("2 damage dealt!\n");
                                 Console.WriteLine("The enemy retaliates!\n");
@@ -410,8 +412,8 @@ namespace MCNR
                     switch (misshit)
                     {
                         case 1:
-                            Console.WriteLine($"Enemy HP: {enemyHP}");
-                            Console.WriteLine($"Your HP: {playerHP}");
+                            //Console.WriteLine($"Enemy HP: {enemyHP}");
+                            //Console.WriteLine($"Your HP: {playerHP}");
                             Console.WriteLine("The enemy missed their strike!");
                             Console.WriteLine("0 damage");
                             Console.WriteLine("\nPress Enter for your turn");
@@ -420,8 +422,8 @@ namespace MCNR
                             break;
                         case 2:
                             playerHP -= 5;
-                            Console.WriteLine($"Enemy HP: {enemyHP}");
-                            Console.WriteLine($"Your HP: {playerHP}");
+                            //Console.WriteLine($"Enemy HP: {enemyHP}");
+                            //Console.WriteLine($"Your HP: {playerHP}");
                             Console.WriteLine("The enemy lands a blow!");
                             Console.WriteLine("5 damage taken");
                             Console.WriteLine("\nPress Enter for your turn");
@@ -430,8 +432,8 @@ namespace MCNR
                             break;
                         case 3:
                             playerHP -= 10;
-                            Console.WriteLine($"Enemy HP: {enemyHP}");
-                            Console.WriteLine($"Your HP: {playerHP}");
+                            //Console.WriteLine($"Enemy HP: {enemyHP}");
+                            //Console.WriteLine($"Your HP: {playerHP}");
                             Console.WriteLine("The enemy strikes fiercely!");
                             Console.WriteLine("10 damage taken");
                             Console.WriteLine("\nPress Enter for your turn");
@@ -440,8 +442,8 @@ namespace MCNR
                             break;
                         default:
                             playerHP -= 2;
-                            Console.WriteLine($"Enemy HP: {enemyHP}");
-                            Console.WriteLine($"Your HP: {playerHP}");
+                            //Console.WriteLine($"Enemy HP: {enemyHP}");
+                            //Console.WriteLine($"Your HP: {playerHP}");
                             Console.WriteLine("The enemy lands a glancing blow.");
                             Console.WriteLine("2 damage taken");
                             Console.WriteLine("\nPress Enter for your turn");
@@ -798,6 +800,7 @@ namespace MCNR
                 string border = new string('-', 60);
                 Console.Clear();
                 Console.WriteLine("Your Inventory:\n");
+                Console.WriteLine($"Current HP: {playerHP}");
                 Console.WriteLine(border);
                 for (int i = 0; i < items.Length; i++)
                 {
@@ -826,6 +829,7 @@ namespace MCNR
                 while (gameRunning)
                 {
                     Console.WriteLine("Press 'I' to view your inventory, or any key to continue the game");
+                    Console.WriteLine($"Current HP:{playerHP}");
                     char input = Console.ReadKey(true).KeyChar;
 
                     switch (input)

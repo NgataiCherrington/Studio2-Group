@@ -23,28 +23,6 @@ namespace MCNR
         static int correct = 0;
         public static Player player;
 
-        // MENU
-
-        
-
-        static void instructions()
-        {
-
-        }
-
-        static void options()
-        {
-
-        }
-        static void credits()
-        {
-
-        }
-        static void exit()
-        {
-
-        }
-
         //*****PLAYER NAME METHOD*****//
 
         public class Player
@@ -2292,7 +2270,9 @@ namespace MCNR
 
                 do
                 {
+
                     Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
                     Console.WriteLine("    ██████                                 █████          ██████                         █████    █████              \r\n  ███░░░░███                              ░░███          ███░░███                       ░░███    ░░███               \r\n ███    ░░███ █████ ████  ██████   █████  ███████       ░███ ░░░   ██████  ████████     ███████   ░███████    ██████ \r\n░███     ░███░░███ ░███  ███░░███ ███░░  ░░░███░       ███████    ███░░███░░███░░███   ░░░███░    ░███░░███  ███░░███\r\n░███   ██░███ ░███ ░███ ░███████ ░░█████   ░███       ░░░███░    ░███ ░███ ░███ ░░░      ░███     ░███ ░███ ░███████ \r\n░░███ ░░████  ░███ ░███ ░███░░░   ░░░░███  ░███ ███     ░███     ░███ ░███ ░███          ░███ ███ ░███ ░███ ░███░░░  \r\n ░░░██████░██ ░░████████░░██████  ██████   ░░█████      █████    ░░██████  █████         ░░█████  ████ █████░░██████ \r\n   ░░░░░░ ░░   ░░░░░░░░  ░░░░░░  ░░░░░░     ░░░░░      ░░░░░      ░░░░░░  ░░░░░           ░░░░░  ░░░░ ░░░░░  ░░░░░░  \r\n                                                                                                                     \r\n                                                                                                                     \r\n                                                                                                                     \r\n █████                         █████       █████   ████  ███                          █████                          \r\n░░███                         ░░███       ░░███   ███░  ░░░                          ░░███                           \r\n ░███         ██████   █████  ███████      ░███  ███    ████  ████████    ███████  ███████   ██████  █████████████   \r\n ░███        ███░░███ ███░░  ░░░███░       ░███████    ░░███ ░░███░░███  ███░░███ ███░░███  ███░░███░░███░░███░░███  \r\n ░███       ░███ ░███░░█████   ░███        ░███░░███    ░███  ░███ ░███ ░███ ░███░███ ░███ ░███ ░███ ░███ ░███ ░███  \r\n ░███      █░███ ░███ ░░░░███  ░███ ███    ░███ ░░███   ░███  ░███ ░███ ░███ ░███░███ ░███ ░███ ░███ ░███ ░███ ░███  \r\n ███████████░░██████  ██████   ░░█████     █████ ░░████ █████ ████ █████░░███████░░████████░░██████  █████░███ █████ \r\n░░░░░░░░░░░  ░░░░░░  ░░░░░░     ░░░░░     ░░░░░   ░░░░ ░░░░░ ░░░░ ░░░░░  ░░░░░███ ░░░░░░░░  ░░░░░░  ░░░░░ ░░░ ░░░░░  \r\n                                                                         ███ ░███                                    \r\n                                                                        ░░██████                                     \r\n                                                                         ░░░░░░                                      ");
                     Console.ResetColor();
                     Console.WriteLine("1. Play game \n\n2. Instructions \n\n3. Options \n\n4. Credits \n\n0. Exit game");
@@ -2330,6 +2310,41 @@ namespace MCNR
 
 
                 } while (input != 0);
+
+                static void instructions()
+                {
+                    Console.Clear();
+                    Console.WriteLine(" INSTRUCTIONS");
+                    Console.WriteLine("1. Enter your player name at the start.\r\n");
+                    Console.WriteLine("");
+                    Console.WriteLine("2. As you play, you’ll travel through towns, forests, and caves.\r\nSometimes you’ll have to choose between paths — these choices affect what you find and who you fight!");
+                    Console.WriteLine("");
+                    Console.WriteLine("3.You’ll gather different materials like health potions, strength potions etc.");
+                    Console.WriteLine("");
+                    Console.WriteLine("4. Potions help you heal or boost your power.\r\nIn towns, you can craft potions if you have enough materials.");
+                    Console.WriteLine("");
+                    Console.WriteLine("5. Visit the blacksmith to upgrade your weapon.\r\nEach upgrade makes your weapon stronger, but costs more each time.");
+                    Console.WriteLine("");
+                    Console.WriteLine("6. You’ll encounter enemies on your journey.\r\nYour health and damage will determine if you win the fight.");
+                    Console.WriteLine("");
+                    Console.WriteLine("7. Characters like Eldrin will give you hints and quests.\r\nRead everything carefully — you might miss important clues if you skip!");
+                    Console.WriteLine("");
+                    Console.WriteLine("9. Stronger enemies will require better weapons and more healing items.\r\nIf your health reaches 0, it’s game over.");
+                    Console.WriteLine("");
+                    Console.WriteLine("10. If you lose a battle or close the game, you’ll restart from the last checkpoint.\r\nAlways aim to reach the next checkpoint before taking big risks.");
+                }
+                static void options()
+                {
+                    Console.WriteLine("OPTIONS HERE");
+                }
+                static void credits()
+                {
+                    Console.WriteLine("credits here");
+                }
+                static void exit()
+                {
+                    Console.WriteLine("confirm they want to exit");
+                }
             }
 
         }

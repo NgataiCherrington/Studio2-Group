@@ -2,6 +2,8 @@
 using System.Data.SqlTypes;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using System.Text.Json;
+
 
 namespace MCNR
 {
@@ -34,9 +36,119 @@ namespace MCNR
                 Name = name;
             }
         }
+        //***************************************************************//
+        //*******************  CHECKPOINT SAVE SYSTEM  ******************//
+        //***************************************************************//
+        // STILL NEED TO EDIT THE STATIC VOIDS FOR THE LOCATIONS TO IMPLEMENT THE SAVE FEATURE //
+
+        // CheckpointManager handles saving/loading all three checkpoints 
+        public static class CheckpointManager
+        {
+            private static readonly string checkpointFile = "checkpoints.json";
+
+            // This class defines the game state to be saved.
+            public class CheckpointState
+            {
+                public int Money { get; set; }
+                public int EnemyHP { get; set; }
+                public int PlayerHP { get; set; }
+                public int Ore { get; set; }
+                public int Flower { get; set; }
+                public int Potion { get; set; }
+                public int CrystalFlower { get; set; }
+                public int SpecialSword { get; set; }
+                public int Correct { get; set; }
+                public string[] Items { get; set; }
+                public int[] Counts { get; set; }
+                public string PlayerName { get; set; }
+            }
+            // Saves the game state into the specified slot (1-3) HOPEFULLY NEEDS TESTING
+            public static void SaveCheckpoint(int slot, CheckpointState state)
+            {
+                if (slot < 1 || slot > 3)
+                {
+                    Console.WriteLine("Invalid checkpoint slot. Choose 1, 2, or 3.");
+                    return;
+                }
+
+                // Load existing checkpoints or create a new array 
+                CheckpointState[] checkpoints = new CheckpointState[3];
+                if (File.Exists(checkpointFile))
+                {
+                    string jsonExisting = File.ReadAllText(checkpointFile);
+                    var loaded = JsonSerializer.Deserialize<CheckpointState[]>(jsonExisting);
+                    if (loaded != null && loaded.Length == 3)
+                    {
+                        checkpoints = loaded;
+                    }
+                }
+
+                // Save the state in the slot (array index slot-1)
+                checkpoints[slot - 1] = state;
+                string json = JsonSerializer.Serialize(checkpoints);
+                File.WriteAllText(checkpointFile, json);
+                Console.WriteLine($"Checkpoint {slot} saved!");
+                Console.ReadLine();
+            }
+
+            // Loads and returns the checkpoint state from the specified slot (1-3)
+            public static CheckpointState LoadCheckpoint(int slot)
+            {
+                if (slot < 1 || slot > 3)
+                {
+                    Console.WriteLine("Invalid checkpoint slot. Choose 1, 2, or 3.");
+                    return null;
+                }
+                if (!File.Exists(checkpointFile))
+                {
+                    Console.WriteLine("No checkpoints have been saved yet.");
+                    Console.ReadLine();
+                    return null;
+                }
+                string json = File.ReadAllText(checkpointFile);
+                var checkpoints = JsonSerializer.Deserialize<CheckpointState[]>(json);
+                if (checkpoints == null || checkpoints.Length != 3)
+                {
+                    Console.WriteLine("Error loading checkpoints.");
+                    Console.ReadLine();
+                    return null;
+                }
+                CheckpointState state = checkpoints[slot - 1];
+                if (state == null)
+                {
+                    Console.WriteLine($"No checkpoint found in slot {slot}.");
+                }
+                else
+                {
+                    Console.WriteLine($"Checkpoint {slot} loaded!");
+                }
+                Console.ReadLine();
+                return state;
+            }
+        }
+        // saves the adventurers stuff and game progress HOPEFULLY
+        static void SaveCurrentCheckpoint(int slot)
+        {
+            var state = new CheckpointManager.CheckpointState
+            {
+                Money = money,
+                EnemyHP = enemyHP,
+                PlayerHP = playerHP,
+                Ore = ore,
+                Flower = flower,
+                Potion = potion,
+                CrystalFlower = crystalflower,
+                SpecialSword = specialsword,
+                Correct = correct,
+                Items = items,
+                Counts = counts,
+                PlayerName = player?.Name ?? ""
+            };
+            CheckpointManager.SaveCheckpoint(slot, state);
+        }
         //**************************************************//
-            //*****HEALTH POTION METHODS*****//
-            public class StrengthPotion
+        //*****HEALTH POTION METHODS*****//
+        public class StrengthPotion
         {
             public string name { get; set; }
             public int increaseAmount { get; set; }
@@ -140,9 +252,9 @@ namespace MCNR
 
         static void UpgradeWeapon(Weapon weapon)
         {
-            if (weapon.UpgradeLevel < weapon.MaxUpgradeLevel)
+            if (weapon.UpgradeLevel < weapon.MaxUpgradeLevel) //is there a max lvl cap??
             {
-                if (ore > 0 && money >= weapon.UpgradeCost)
+                if (ore > 0 && money >= weapon.UpgradeCost) //need feedback is this the blacksmith issue?
                 {
                     //deduct iron and currency for upgrade
                     ore--;
@@ -159,7 +271,7 @@ namespace MCNR
                 }
                 else
                 {
-                    Console.WriteLine("Not enough iron or currency to upgrade weapon");
+                    Console.WriteLine($"\nNot enough iron or currency to upgrade weapon, come back when you have {weapon.UpgradeCost}!"); //added weapon uprgade cost value, does ores need to be included?
                 }
             }
             else
@@ -209,7 +321,9 @@ namespace MCNR
 
 
             // ========= ACTUAL FLOW OF THE GAME FOR MAIN ========= //
+
             Menu();
+            DeathScreen();
             Introduction();
             Tutorial();               // missing tutorial for using inventory and using potions
             EnteringTownAnimation();
@@ -230,6 +344,8 @@ namespace MCNR
                 {
                     //prompt player to attack or check inventory
                     Console.Write("Press 'A' to strike or 'I' to check your inventory: ");
+
+                    Console.WriteLine($"\nYour HP: {playerHP}\nEnemy HP: {enemyHP}");
                     string input = Console.ReadLine();
 
                     char choice = ' '; //declare choice outside of the input check
@@ -252,8 +368,8 @@ namespace MCNR
                         switch (hitmiss)
                         {
                             case 1:
-                                Console.WriteLine($"Enemy HP: {enemyHP}");
-                                Console.WriteLine($"Your HP: {playerHP}");
+                                //Console.WriteLine($"Enemy HP: {enemyHP}");
+                                //Console.WriteLine($"Your HP: {playerHP}");
                                 Console.WriteLine("Your swing goes wide, missing the enemy entirely!");
                                 Console.WriteLine("0 damage\n");
                                 Console.WriteLine("The enemy retaliates!\n");
@@ -261,8 +377,8 @@ namespace MCNR
                                 break;
                             case 2:
                                 enemyHP -= 5;
-                                Console.WriteLine($"Enemy HP: {enemyHP}");
-                                Console.WriteLine($"Your HP: {playerHP}");
+                                //Console.WriteLine($"Enemy HP: {enemyHP}");
+                                //Console.WriteLine($"Your HP: {playerHP}");
                                 Console.WriteLine("You strike true!");
                                 Console.WriteLine("5 damage dealt!\n");
                                 Console.WriteLine("The enemy retaliates!\n");
@@ -270,8 +386,8 @@ namespace MCNR
                                 break;
                             case 3:
                                 enemyHP -= 10;
-                                Console.WriteLine($"Enemy HP: {enemyHP}");
-                                Console.WriteLine($"Your HP: {playerHP}");
+                                //Console.WriteLine($"Enemy HP: {enemyHP}");
+                                //Console.WriteLine($"Your HP: {playerHP}");
                                 Console.WriteLine("A fierce blow!");
                                 Console.WriteLine("10 damage dealt!\n");
                                 Console.WriteLine("The enemy retaliates!\n");
@@ -279,8 +395,8 @@ namespace MCNR
                                 break;
                             default:
                                 enemyHP -= 2;
-                                Console.WriteLine($"Enemy HP: {enemyHP}");
-                                Console.WriteLine($"Your HP: {playerHP}");
+                                //Console.WriteLine($"Enemy HP: {enemyHP}");
+                                //Console.WriteLine($"Your HP: {playerHP}");
                                 Console.WriteLine("You landed a glancing blow.");
                                 Console.WriteLine("2 damage dealt!\n");
                                 Console.WriteLine("The enemy retaliates!\n");
@@ -302,8 +418,8 @@ namespace MCNR
                     switch (misshit)
                     {
                         case 1:
-                            Console.WriteLine($"Enemy HP: {enemyHP}");
-                            Console.WriteLine($"Your HP: {playerHP}");
+                            //Console.WriteLine($"Enemy HP: {enemyHP}");
+                            //Console.WriteLine($"Your HP: {playerHP}");
                             Console.WriteLine("The enemy missed their strike!");
                             Console.WriteLine("0 damage");
                             Console.WriteLine("\nPress Enter for your turn");
@@ -312,8 +428,8 @@ namespace MCNR
                             break;
                         case 2:
                             playerHP -= 5;
-                            Console.WriteLine($"Enemy HP: {enemyHP}");
-                            Console.WriteLine($"Your HP: {playerHP}");
+                            //Console.WriteLine($"Enemy HP: {enemyHP}");
+                            //Console.WriteLine($"Your HP: {playerHP}");
                             Console.WriteLine("The enemy lands a blow!");
                             Console.WriteLine("5 damage taken");
                             Console.WriteLine("\nPress Enter for your turn");
@@ -322,8 +438,8 @@ namespace MCNR
                             break;
                         case 3:
                             playerHP -= 10;
-                            Console.WriteLine($"Enemy HP: {enemyHP}");
-                            Console.WriteLine($"Your HP: {playerHP}");
+                            //Console.WriteLine($"Enemy HP: {enemyHP}");
+                            //Console.WriteLine($"Your HP: {playerHP}");
                             Console.WriteLine("The enemy strikes fiercely!");
                             Console.WriteLine("10 damage taken");
                             Console.WriteLine("\nPress Enter for your turn");
@@ -332,8 +448,8 @@ namespace MCNR
                             break;
                         default:
                             playerHP -= 2;
-                            Console.WriteLine($"Enemy HP: {enemyHP}");
-                            Console.WriteLine($"Your HP: {playerHP}");
+                            //Console.WriteLine($"Enemy HP: {enemyHP}");
+                            //Console.WriteLine($"Your HP: {playerHP}");
                             Console.WriteLine("The enemy lands a glancing blow.");
                             Console.WriteLine("2 damage taken");
                             Console.WriteLine("\nPress Enter for your turn");
@@ -427,11 +543,7 @@ namespace MCNR
                 if (playerHP <= 0) //player dies
                 {
                     Console.Beep(400, 500);
-                    Console.WriteLine("You have fallen in battle. <enter>");
-                    Console.ReadLine();
-                    Console.WriteLine("G A M E O V E R <enter>");
-                    Console.ReadLine();
-                    Environment.Exit(0);  //stop program
+                    DeathScreen();
                 }
 
                 string[] tutorialInventoryDialogue2 = new string[]
@@ -694,6 +806,7 @@ namespace MCNR
                 string border = new string('-', 60);
                 Console.Clear();
                 Console.WriteLine("Your Inventory:\n");
+                Console.WriteLine($"Current HP: {playerHP}");
                 Console.WriteLine(border);
                 for (int i = 0; i < items.Length; i++)
                 {
@@ -722,6 +835,7 @@ namespace MCNR
                 while (gameRunning)
                 {
                     Console.WriteLine("Press 'I' to view your inventory, or any key to continue the game");
+                    Console.WriteLine($"Current HP:{playerHP}");
                     char input = Console.ReadKey(true).KeyChar;
 
                     switch (input)
@@ -2237,6 +2351,49 @@ namespace MCNR
 
                     // Once enemy or player dies, stops loop
                 } while (bossHP > 0 && playerHP > 0);
+            }
+
+            static void DeathScreen()
+            {
+                
+                string deathTitle = @" #     # ####### #     #    ######  ### ####### ######  
+  #   #  #     # #     #    #     #  #  #       #     # 
+   # #   #     # #     #    #     #  #  #       #     # 
+    #    #     # #     #    #     #  #  #####   #     # 
+    #    #     # #     #    #     #  #  #       #     # 
+    #    #     # #     #    #     #  #  #       #     # 
+    #    #######  #####     ######  ### ####### ######  
+";
+
+                Console.WriteLine(deathTitle);
+
+                Console.WriteLine("\nWould you like to...\n");
+                string[] deathMenu = new string[]
+                {
+                    "1. Return to the Main Menu.",
+                    "2. Return to last checkpoint.",
+                    "3. Exit console."
+                };
+
+                foreach (string death in deathMenu)
+                {
+                    Console.WriteLine(death);
+                }
+
+                Console.Write("\nEnter choice here: ");
+                string input = "";
+                input = Console.ReadLine();
+
+                switch(input)
+                {
+                    case "1":
+                        break;
+                    case "2":
+                        break;
+                    case "3":
+                        break;
+                }
+
             }
 
             static void Win()

@@ -23,7 +23,6 @@ namespace MCNR
         
 
         //*****PLAYER NAME METHOD*****//
-        //THIS NEEDS TO BE WORKED ON//
         private static string playersName;
         //**************************************************//
             //*****POTION METHODS*****//
@@ -447,10 +446,6 @@ namespace MCNR
                     Console.WriteLine("Invalid. Press 'P' to collect your loot!");
 
                 }
-                Console.WriteLine("\nNarrator: Gather more flowers to purchase health potions at the Potion Maker");
-                Console.WriteLine("\n\tCollect iron to upgrade your sword at the Blacksmith. <enter>");
-                Console.ReadLine();
-                Console.Clear();
             }
 
             static void TutorialUsingPotionAndInventory()

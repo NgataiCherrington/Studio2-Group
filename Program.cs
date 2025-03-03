@@ -1,12 +1,16 @@
 ﻿using System.ComponentModel;
 using System.Data.SqlTypes;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using System.Text.Json;
+
 
 namespace MCNR
 {
+    
     internal class Program
     {
+         
         //ARRAY FOR INVENTORIES
         static string[] items = new string[15];
         static int[] counts = new int[15];
@@ -22,7 +26,7 @@ namespace MCNR
         public static Player player;
 
         //*****PLAYER NAME METHOD*****//
- 
+
         public class Player
         {
             public string Name { get; set; }
@@ -248,9 +252,9 @@ namespace MCNR
 
         static void UpgradeWeapon(Weapon weapon)
         {
-            if (weapon.UpgradeLevel < weapon.MaxUpgradeLevel)
+            if (weapon.UpgradeLevel < weapon.MaxUpgradeLevel) //is there a max lvl cap??
             {
-                if (ore > 0 && money >= weapon.UpgradeCost)
+                if (ore > 0 && money >= weapon.UpgradeCost) //need feedback is this the blacksmith issue?
                 {
                     //deduct iron and currency for upgrade
                     ore--;
@@ -267,7 +271,7 @@ namespace MCNR
                 }
                 else
                 {
-                    Console.WriteLine("Not enough iron or currency to upgrade weapon");
+                    Console.WriteLine($"\nNot enough iron or currency to upgrade weapon, come back when you have {weapon.UpgradeCost}!"); //added weapon uprgade cost value, does ores need to be included?
                 }
             }
             else
@@ -280,7 +284,7 @@ namespace MCNR
         //*****MAIN METHOD*****//
         static void Main(string[] args)
         {
-            
+
             //InitializeInventory();
             //PrintInventory();
             //Introduction();
@@ -317,6 +321,9 @@ namespace MCNR
 
 
             // ========= ACTUAL FLOW OF THE GAME FOR MAIN ========= //
+
+            Menu();
+            DeathScreen();
             Introduction();
             Tutorial();               // missing tutorial for using inventory and using potions
             EnteringTownAnimation();
@@ -337,6 +344,8 @@ namespace MCNR
                 {
                     //prompt player to attack or check inventory
                     Console.Write("Press 'A' to strike or 'I' to check your inventory: ");
+
+                    Console.WriteLine($"\nYour HP: {playerHP}\nEnemy HP: {enemyHP}");
                     string input = Console.ReadLine();
 
                     char choice = ' '; //declare choice outside of the input check
@@ -359,39 +368,39 @@ namespace MCNR
                         switch (hitmiss)
                         {
                             case 1:
-                                Console.WriteLine($"Enemy HP: {enemyHP}");
-                                Console.WriteLine($"Your HP: {playerHP}");
+                                //Console.WriteLine($"Enemy HP: {enemyHP}");
+                                //Console.WriteLine($"Your HP: {playerHP}");
                                 Console.WriteLine("Your swing goes wide, missing the enemy entirely!");
                                 Console.WriteLine("0 damage\n");
                                 Console.WriteLine("The enemy retaliates!\n");
-                                Thread.Sleep(1500);
+                                Thread.Sleep(750);
                                 break;
                             case 2:
                                 enemyHP -= 5;
-                                Console.WriteLine($"Enemy HP: {enemyHP}");
-                                Console.WriteLine($"Your HP: {playerHP}");
+                                //Console.WriteLine($"Enemy HP: {enemyHP}");
+                                //Console.WriteLine($"Your HP: {playerHP}");
                                 Console.WriteLine("You strike true!");
                                 Console.WriteLine("5 damage dealt!\n");
                                 Console.WriteLine("The enemy retaliates!\n");
-                                Thread.Sleep(1500);
+                                Thread.Sleep(750);
                                 break;
                             case 3:
                                 enemyHP -= 10;
-                                Console.WriteLine($"Enemy HP: {enemyHP}");
-                                Console.WriteLine($"Your HP: {playerHP}");
+                                //Console.WriteLine($"Enemy HP: {enemyHP}");
+                                //Console.WriteLine($"Your HP: {playerHP}");
                                 Console.WriteLine("A fierce blow!");
                                 Console.WriteLine("10 damage dealt!\n");
                                 Console.WriteLine("The enemy retaliates!\n");
-                                Thread.Sleep(1500);
+                                Thread.Sleep(750);
                                 break;
                             default:
                                 enemyHP -= 2;
-                                Console.WriteLine($"Enemy HP: {enemyHP}");
-                                Console.WriteLine($"Your HP: {playerHP}");
+                                //Console.WriteLine($"Enemy HP: {enemyHP}");
+                                //Console.WriteLine($"Your HP: {playerHP}");
                                 Console.WriteLine("You landed a glancing blow.");
                                 Console.WriteLine("2 damage dealt!\n");
                                 Console.WriteLine("The enemy retaliates!\n");
-                                Thread.Sleep(1500);
+                                Thread.Sleep(750);
                                 break;
                         }
                     }
@@ -409,8 +418,8 @@ namespace MCNR
                     switch (misshit)
                     {
                         case 1:
-                            Console.WriteLine($"Enemy HP: {enemyHP}");
-                            Console.WriteLine($"Your HP: {playerHP}");
+                            //Console.WriteLine($"Enemy HP: {enemyHP}");
+                            //Console.WriteLine($"Your HP: {playerHP}");
                             Console.WriteLine("The enemy missed their strike!");
                             Console.WriteLine("0 damage");
                             Console.WriteLine("\nPress Enter for your turn");
@@ -419,8 +428,8 @@ namespace MCNR
                             break;
                         case 2:
                             playerHP -= 5;
-                            Console.WriteLine($"Enemy HP: {enemyHP}");
-                            Console.WriteLine($"Your HP: {playerHP}");
+                            //Console.WriteLine($"Enemy HP: {enemyHP}");
+                            //Console.WriteLine($"Your HP: {playerHP}");
                             Console.WriteLine("The enemy lands a blow!");
                             Console.WriteLine("5 damage taken");
                             Console.WriteLine("\nPress Enter for your turn");
@@ -429,8 +438,8 @@ namespace MCNR
                             break;
                         case 3:
                             playerHP -= 10;
-                            Console.WriteLine($"Enemy HP: {enemyHP}");
-                            Console.WriteLine($"Your HP: {playerHP}");
+                            //Console.WriteLine($"Enemy HP: {enemyHP}");
+                            //Console.WriteLine($"Your HP: {playerHP}");
                             Console.WriteLine("The enemy strikes fiercely!");
                             Console.WriteLine("10 damage taken");
                             Console.WriteLine("\nPress Enter for your turn");
@@ -439,8 +448,8 @@ namespace MCNR
                             break;
                         default:
                             playerHP -= 2;
-                            Console.WriteLine($"Enemy HP: {enemyHP}");
-                            Console.WriteLine($"Your HP: {playerHP}");
+                            //Console.WriteLine($"Enemy HP: {enemyHP}");
+                            //Console.WriteLine($"Your HP: {playerHP}");
                             Console.WriteLine("The enemy lands a glancing blow.");
                             Console.WriteLine("2 damage taken");
                             Console.WriteLine("\nPress Enter for your turn");
@@ -475,14 +484,15 @@ namespace MCNR
 
                 //storyline intro
                 Console.Write("Please Enter Your Name: ");
-                string playersName = Console.ReadLine();
-                Player player = new Player(playersName);
+                string playerName = Console.ReadLine();
                 Console.Clear();
 
+                player = new Player(playerName);
+                
                 string[] introDialogue = new string[]
                 {
                     "Narrator: In the serene land of Eldoria, darkness begins to encroach, threatening the peace of its inhabitants...",
-                    $"\n\tYou are {playersName}...",
+                    $"\n\tYou are {player.Name}...",
                     "\n\tA budding hero!. Awakening to the call of adventure...",
                     "\n\tEquipped only with your bravery and a timeworn sword...",
                     "\n\tYour quest commences at the edge of your village...",
@@ -494,7 +504,7 @@ namespace MCNR
                 foreach (string words in introDialogue)
                 {
                     Console.WriteLine(words);
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
                 }
                 Console.ReadLine();
                 Console.Clear();
@@ -510,7 +520,7 @@ namespace MCNR
                 foreach (string words in tutorialControlDialogue)
                 {
                     Console.WriteLine(words);
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
                 }
                 //Console.Write("\nPress 'A' to strike!: ");
                 Console.ReadLine();
@@ -534,11 +544,7 @@ namespace MCNR
                 if (playerHP <= 0) //player dies
                 {
                     Console.Beep(400, 500);
-                    Console.WriteLine("You have fallen in battle. <enter>");
-                    Console.ReadLine();
-                    Console.WriteLine("G A M E O V E R <enter>");
-                    Console.ReadLine();
-                    Environment.Exit(0);  //stop program
+                    DeathScreen();
                 }
 
                 string[] tutorialInventoryDialogue2 = new string[]
@@ -632,10 +638,10 @@ namespace MCNR
                     PrintInventory();
 
                     Console.WriteLine("Narrator: Great! Now you know how to check your inventory.");
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
 
                     Console.WriteLine("Narrator: Remember, during fights with enemies, it's crucial to use 'I' to access your items. You never know when a Health Potion might save you!");
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
 
                     Console.WriteLine("\nNarrator: Now, let’s head to town and prepare for your next adventure! <enter>");
                     Console.ReadLine();
@@ -687,9 +693,9 @@ namespace MCNR
                     enemyHP -= 100;
 
                     Console.WriteLine("You grip the hilt of your Sowrd Sword, feeling its power coursing through you.");
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
                     Console.WriteLine("A brilliant flash of light erupts as the sword strikes your enemy.");
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
                     Console.WriteLine($"The enemy staggers back, losing 100 health points! <enter>");
                     Console.ReadLine();
                     Console.Clear();
@@ -801,6 +807,7 @@ namespace MCNR
                 string border = new string('-', 60);
                 Console.Clear();
                 Console.WriteLine("Your Inventory:\n");
+                Console.WriteLine($"Current HP: {playerHP}");
                 Console.WriteLine(border);
                 for (int i = 0; i < items.Length; i++)
                 {
@@ -829,6 +836,7 @@ namespace MCNR
                 while (gameRunning)
                 {
                     Console.WriteLine("Press 'I' to view your inventory, or any key to continue the game");
+                    Console.WriteLine($"Current HP:{playerHP}");
                     char input = Console.ReadKey(true).KeyChar;
 
                     switch (input)
@@ -867,7 +875,7 @@ namespace MCNR
                 foreach (string frame in animationFrames)
                 {
                     Console.WriteLine(frame);   // Display the current frame
-                    Thread.Sleep(1500);         // Pause for 1.5 seconds before showing the next frame
+                    Thread.Sleep(750);         // Pause for 1.5 seconds before showing the next frame
                 }
 
                 Console.Clear();
@@ -902,7 +910,7 @@ namespace MCNR
                 if (input != null)
                 {
                     Console.Clear();
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
                 }
 
                 //game dialogue
@@ -920,7 +928,7 @@ namespace MCNR
                 foreach (string words in gameDialogue)
                 {
                     Console.WriteLine(words);
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
                 }
                 Console.Clear();
 
@@ -1010,7 +1018,7 @@ namespace MCNR
                 while (continueInTown)
                 {
                     //ask user if they want to visit blacksmith or potion maker
-                    Console.WriteLine("\nNarrator: Welcome back to Eldoria! What would you like to do?:");
+                    Console.WriteLine($"\nNarrator: Welcome back to Eldoria {player.Name}! What would you like to do?:");
                     Console.WriteLine("\n\t1. The Blacksmith");
                     Console.WriteLine("\n\t2. The Potion Maker");
                     Console.WriteLine("\n\t3. Set forth on your quest");
@@ -1076,7 +1084,7 @@ namespace MCNR
                 foreach (string intro in blackSmith)
                 {
                     Console.WriteLine(intro);
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
                 }
                 Console.Clear();
 
@@ -1187,11 +1195,11 @@ namespace MCNR
                 {
                     Console.Clear();
                     Console.WriteLine("\n[Eldrin the Wise]: I thought so. The path ahead is fraught with danger.");
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
                     Console.WriteLine("\n\t\tI advise you to practice your skills and gather loot from the enemies in the forest and cave.");
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
                     Console.WriteLine("\n\t\tYou may also discover special items that will aid you in your upcoming battle.");
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
                     Console.WriteLine("\n\t\tReturn when you feel stronger, and I’ll be here to guide you. <enter>");
                     Console.ReadLine();
                     Console.Clear();
@@ -2240,7 +2248,7 @@ namespace MCNR
                                 Console.WriteLine("Your swing goes wide, missing the Big Boss entirely!");
                                 Console.WriteLine("0 damage dealt.\n");
                                 Console.WriteLine("The Big Boss chuckles darkly, readying an attack...\n");
-                                Thread.Sleep(1500);
+                                Thread.Sleep(750);
                                 break;
                             case 2:
                                 bossHP -= 5;
@@ -2249,7 +2257,7 @@ namespace MCNR
                                 Console.WriteLine("You strike true! Your weapon glints in the dim light.");
                                 Console.WriteLine("5 damage dealt!\n");
                                 Console.WriteLine("The Big Boss snarls in fury!\n");
-                                Thread.Sleep(1500);
+                                Thread.Sleep(750);
                                 break;
                             case 3:
                                 bossHP -= 10;
@@ -2258,7 +2266,7 @@ namespace MCNR
                                 Console.WriteLine("A fierce blow! You feel the ground shake as your strike lands.");
                                 Console.WriteLine("10 damage dealt!\n");
                                 Console.WriteLine("The Big Boss roars in pain!\n");
-                                Thread.Sleep(1500);
+                                Thread.Sleep(750);
                                 break;
                             default:
                                 bossHP -= 2;
@@ -2267,26 +2275,26 @@ namespace MCNR
                                 Console.WriteLine("You landed a glancing blow, but the Big Boss is still standing.");
                                 Console.WriteLine("2 damage dealt!\n");
                                 Console.WriteLine("The Big Boss glares at you, unfazed...\n");
-                                Thread.Sleep(1500);
+                                Thread.Sleep(750);
                                 break;
                         }
                         if (bossHP <= 200 && bossHP > 100)
                         {
                             Console.WriteLine("The Big Boss staggers slightly, but quickly regains composure.");
                             Console.WriteLine("“Is that all you’ve got? I will not fall so easily!”\n");
-                            Thread.Sleep(1500);
+                            Thread.Sleep(750);
                         }
                         else if (bossHP <= 100 && bossHP > 50)
                         {
                             Console.WriteLine("The Big Boss is visibly weakened, breathing heavily.");
                             Console.WriteLine("“You may have strength, but you lack resolve!”\n");
-                            Thread.Sleep(1500);
+                            Thread.Sleep(750);
                         }
                         else if (bossHP <= 50)
                         {
                             Console.WriteLine("The Big Boss lets out a furious roar, clearly enraged.");
                             Console.WriteLine("“I will not let you take my throne! Prepare for my final attack!”\n");
-                            Thread.Sleep(1500);
+                            Thread.Sleep(750);
                         }
                     }
                     else if (choice == 'i')
@@ -2349,6 +2357,49 @@ namespace MCNR
                 } while (bossHP > 0 && playerHP > 0);
             }
 
+            static void DeathScreen()
+            {
+                
+                string deathTitle = @" #     # ####### #     #    ######  ### ####### ######  
+  #   #  #     # #     #    #     #  #  #       #     # 
+   # #   #     # #     #    #     #  #  #       #     # 
+    #    #     # #     #    #     #  #  #####   #     # 
+    #    #     # #     #    #     #  #  #       #     # 
+    #    #     # #     #    #     #  #  #       #     # 
+    #    #######  #####     ######  ### ####### ######  
+";
+
+                Console.WriteLine(deathTitle);
+
+                Console.WriteLine("\nWould you like to...\n");
+                string[] deathMenu = new string[]
+                {
+                    "1. Return to the Main Menu.",
+                    "2. Return to last checkpoint.",
+                    "3. Exit console."
+                };
+
+                foreach (string death in deathMenu)
+                {
+                    Console.WriteLine(death);
+                }
+
+                Console.Write("\nEnter choice here: ");
+                string input = "";
+                input = Console.ReadLine();
+
+                switch(input)
+                {
+                    case "1":
+                        break;
+                    case "2":
+                        break;
+                    case "3":
+                        break;
+                }
+
+            }
+
             static void Win()
             {
                 Console.Clear();
@@ -2372,6 +2423,90 @@ namespace MCNR
                 Console.WriteLine("Press Enter to exit the game.");
                 Console.ReadLine();
                 Environment.Exit(0);
+            }
+
+            static void Menu()
+            {
+                int input;
+
+                do
+                {
+
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.WriteLine("    ██████                                 █████          ██████                         █████    █████              \r\n  ███░░░░███                              ░░███          ███░░███                       ░░███    ░░███               \r\n ███    ░░███ █████ ████  ██████   █████  ███████       ░███ ░░░   ██████  ████████     ███████   ░███████    ██████ \r\n░███     ░███░░███ ░███  ███░░███ ███░░  ░░░███░       ███████    ███░░███░░███░░███   ░░░███░    ░███░░███  ███░░███\r\n░███   ██░███ ░███ ░███ ░███████ ░░█████   ░███       ░░░███░    ░███ ░███ ░███ ░░░      ░███     ░███ ░███ ░███████ \r\n░░███ ░░████  ░███ ░███ ░███░░░   ░░░░███  ░███ ███     ░███     ░███ ░███ ░███          ░███ ███ ░███ ░███ ░███░░░  \r\n ░░░██████░██ ░░████████░░██████  ██████   ░░█████      █████    ░░██████  █████         ░░█████  ████ █████░░██████ \r\n   ░░░░░░ ░░   ░░░░░░░░  ░░░░░░  ░░░░░░     ░░░░░      ░░░░░      ░░░░░░  ░░░░░           ░░░░░  ░░░░ ░░░░░  ░░░░░░  \r\n                                                                                                                     \r\n                                                                                                                     \r\n                                                                                                                     \r\n █████                         █████       █████   ████  ███                          █████                          \r\n░░███                         ░░███       ░░███   ███░  ░░░                          ░░███                           \r\n ░███         ██████   █████  ███████      ░███  ███    ████  ████████    ███████  ███████   ██████  █████████████   \r\n ░███        ███░░███ ███░░  ░░░███░       ░███████    ░░███ ░░███░░███  ███░░███ ███░░███  ███░░███░░███░░███░░███  \r\n ░███       ░███ ░███░░█████   ░███        ░███░░███    ░███  ░███ ░███ ░███ ░███░███ ░███ ░███ ░███ ░███ ░███ ░███  \r\n ░███      █░███ ░███ ░░░░███  ░███ ███    ░███ ░░███   ░███  ░███ ░███ ░███ ░███░███ ░███ ░███ ░███ ░███ ░███ ░███  \r\n ███████████░░██████  ██████   ░░█████     █████ ░░████ █████ ████ █████░░███████░░████████░░██████  █████░███ █████ \r\n░░░░░░░░░░░  ░░░░░░  ░░░░░░     ░░░░░     ░░░░░   ░░░░ ░░░░░ ░░░░ ░░░░░  ░░░░░███ ░░░░░░░░  ░░░░░░  ░░░░░ ░░░ ░░░░░  \r\n                                                                         ███ ░███                                    \r\n                                                                        ░░██████                                     \r\n                                                                         ░░░░░░                                      ");
+                    Console.ResetColor();
+                    Console.WriteLine("1. Play game \n\n2. Instructions \n\n3. Options \n\n4. Credits \n\n0. Exit game");
+                    Console.Write("\nEnter choice here: ");
+                    input = Convert.ToInt32(Console.ReadLine());
+                    Console.Clear();
+
+                    switch (input)
+                    {
+
+                        case 1:
+
+                            Introduction();
+                            break;
+
+                        case 2:
+
+                            instructions();
+                            break;
+
+                        case 3:
+
+                            options();
+                            break;
+                        case 4:
+
+                            credits();
+                            break;
+
+                        case 0:
+                            Console.WriteLine("Exit");
+                            break;
+
+                    }
+
+
+
+                } while (input != 0);
+
+                static void instructions()
+                {
+                    Console.Clear();
+                    Console.WriteLine(" INSTRUCTIONS");
+                    Console.WriteLine("1. Enter your player name at the start.\r\n");
+                    Console.WriteLine("");
+                    Console.WriteLine("2. As you play, you’ll travel through towns, forests, and caves.\r\nSometimes you’ll have to choose between paths — these choices affect what you find and who you fight!");
+                    Console.WriteLine("");
+                    Console.WriteLine("3.You’ll gather different materials like health potions, strength potions etc.");
+                    Console.WriteLine("");
+                    Console.WriteLine("4. Potions help you heal or boost your power.\r\nIn towns, you can craft potions if you have enough materials.");
+                    Console.WriteLine("");
+                    Console.WriteLine("5. Visit the blacksmith to upgrade your weapon.\r\nEach upgrade makes your weapon stronger, but costs more each time.");
+                    Console.WriteLine("");
+                    Console.WriteLine("6. You’ll encounter enemies on your journey.\r\nYour health and damage will determine if you win the fight.");
+                    Console.WriteLine("");
+                    Console.WriteLine("7. Characters like Eldrin will give you hints and quests.\r\nRead everything carefully — you might miss important clues if you skip!");
+                    Console.WriteLine("");
+                    Console.WriteLine("9. Stronger enemies will require better weapons and more healing items.\r\nIf your health reaches 0, it’s game over.");
+                    Console.WriteLine("");
+                    Console.WriteLine("10. If you lose a battle or close the game, you’ll restart from the last checkpoint.\r\nAlways aim to reach the next checkpoint before taking big risks.");
+                }
+                static void options()
+                {
+                    Console.WriteLine("OPTIONS HERE");
+                }
+                static void credits()
+                {
+                    Console.WriteLine("credits here");
+                }
+                static void exit()
+                {
+                    Console.WriteLine("confirm they want to exit");
+                }
             }
 
         }

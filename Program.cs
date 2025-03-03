@@ -878,6 +878,9 @@ namespace MCNR
             static void Town()
             {
                 string title = "You have entered the Town of Eldoria";
+                SaveCurrentCheckpoint(1);
+                Console.WriteLine("Checkpoint in town saved. Press Enter to continue...");
+                Console.ReadLine();
                 string next = "Hit <enter to continue>";
                 int borderWidth1 = next.Length + 6;
                 int borderWidth = title.Length + 6;

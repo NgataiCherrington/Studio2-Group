@@ -373,7 +373,7 @@ namespace MCNR
                                 Console.WriteLine("Your swing goes wide, missing the enemy entirely!");
                                 Console.WriteLine("0 damage\n");
                                 Console.WriteLine("The enemy retaliates!\n");
-                                Thread.Sleep(1500);
+                                Thread.Sleep(750);
                                 break;
                             case 2:
                                 enemyHP -= 5;
@@ -382,7 +382,7 @@ namespace MCNR
                                 Console.WriteLine("You strike true!");
                                 Console.WriteLine("5 damage dealt!\n");
                                 Console.WriteLine("The enemy retaliates!\n");
-                                Thread.Sleep(1500);
+                                Thread.Sleep(750);
                                 break;
                             case 3:
                                 enemyHP -= 10;
@@ -391,7 +391,7 @@ namespace MCNR
                                 Console.WriteLine("A fierce blow!");
                                 Console.WriteLine("10 damage dealt!\n");
                                 Console.WriteLine("The enemy retaliates!\n");
-                                Thread.Sleep(1500);
+                                Thread.Sleep(750);
                                 break;
                             default:
                                 enemyHP -= 2;
@@ -400,7 +400,7 @@ namespace MCNR
                                 Console.WriteLine("You landed a glancing blow.");
                                 Console.WriteLine("2 damage dealt!\n");
                                 Console.WriteLine("The enemy retaliates!\n");
-                                Thread.Sleep(1500);
+                                Thread.Sleep(750);
                                 break;
                         }
                     }
@@ -484,14 +484,15 @@ namespace MCNR
 
                 //storyline intro
                 Console.Write("Please Enter Your Name: ");
-                string playersName = Console.ReadLine();
-                Player player = new Player(playersName);
+                string playerName = Console.ReadLine();
                 Console.Clear();
 
+                player = new Player(playerName);
+                
                 string[] introDialogue = new string[]
                 {
                     "Narrator: In the serene land of Eldoria, darkness begins to encroach, threatening the peace of its inhabitants...",
-                    $"\n\tYou are {playersName}...",
+                    $"\n\tYou are {player.Name}...",
                     "\n\tA budding hero!. Awakening to the call of adventure...",
                     "\n\tEquipped only with your bravery and a timeworn sword...",
                     "\n\tYour quest commences at the edge of your village...",
@@ -503,7 +504,7 @@ namespace MCNR
                 foreach (string words in introDialogue)
                 {
                     Console.WriteLine(words);
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
                 }
                 Console.ReadLine();
                 Console.Clear();
@@ -519,7 +520,7 @@ namespace MCNR
                 foreach (string words in tutorialControlDialogue)
                 {
                     Console.WriteLine(words);
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
                 }
                 //Console.Write("\nPress 'A' to strike!: ");
                 Console.ReadLine();
@@ -637,10 +638,10 @@ namespace MCNR
                     PrintInventory();
 
                     Console.WriteLine("Narrator: Great! Now you know how to check your inventory.");
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
 
                     Console.WriteLine("Narrator: Remember, during fights with enemies, it's crucial to use 'I' to access your items. You never know when a Health Potion might save you!");
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
 
                     Console.WriteLine("\nNarrator: Now, let’s head to town and prepare for your next adventure! <enter>");
                     Console.ReadLine();
@@ -692,9 +693,9 @@ namespace MCNR
                     enemyHP -= 100;
 
                     Console.WriteLine("You grip the hilt of your Sowrd Sword, feeling its power coursing through you.");
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
                     Console.WriteLine("A brilliant flash of light erupts as the sword strikes your enemy.");
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
                     Console.WriteLine($"The enemy staggers back, losing 100 health points! <enter>");
                     Console.ReadLine();
                     Console.Clear();
@@ -874,7 +875,7 @@ namespace MCNR
                 foreach (string frame in animationFrames)
                 {
                     Console.WriteLine(frame);   // Display the current frame
-                    Thread.Sleep(1500);         // Pause for 1.5 seconds before showing the next frame
+                    Thread.Sleep(750);         // Pause for 1.5 seconds before showing the next frame
                 }
 
                 Console.Clear();
@@ -906,7 +907,7 @@ namespace MCNR
                 if (input != null)
                 {
                     Console.Clear();
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
                 }
 
                 //game dialogue
@@ -924,7 +925,7 @@ namespace MCNR
                 foreach (string words in gameDialogue)
                 {
                     Console.WriteLine(words);
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
                 }
                 Console.Clear();
 
@@ -1014,7 +1015,7 @@ namespace MCNR
                 while (continueInTown)
                 {
                     //ask user if they want to visit blacksmith or potion maker
-                    Console.WriteLine("\nNarrator: Welcome back to Eldoria! What would you like to do?:");
+                    Console.WriteLine($"\nNarrator: Welcome back to Eldoria {player.Name}! What would you like to do?:");
                     Console.WriteLine("\n\t1. The Blacksmith");
                     Console.WriteLine("\n\t2. The Potion Maker");
                     Console.WriteLine("\n\t3. Set forth on your quest");
@@ -1080,7 +1081,7 @@ namespace MCNR
                 foreach (string intro in blackSmith)
                 {
                     Console.WriteLine(intro);
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
                 }
                 Console.Clear();
 
@@ -1191,11 +1192,11 @@ namespace MCNR
                 {
                     Console.Clear();
                     Console.WriteLine("\n[Eldrin the Wise]: I thought so. The path ahead is fraught with danger.");
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
                     Console.WriteLine("\n\t\tI advise you to practice your skills and gather loot from the enemies in the forest and cave.");
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
                     Console.WriteLine("\n\t\tYou may also discover special items that will aid you in your upcoming battle.");
-                    Thread.Sleep(1500);
+                    Thread.Sleep(750);
                     Console.WriteLine("\n\t\tReturn when you feel stronger, and I’ll be here to guide you. <enter>");
                     Console.ReadLine();
                     Console.Clear();
@@ -2244,7 +2245,7 @@ namespace MCNR
                                 Console.WriteLine("Your swing goes wide, missing the Big Boss entirely!");
                                 Console.WriteLine("0 damage dealt.\n");
                                 Console.WriteLine("The Big Boss chuckles darkly, readying an attack...\n");
-                                Thread.Sleep(1500);
+                                Thread.Sleep(750);
                                 break;
                             case 2:
                                 bossHP -= 5;
@@ -2253,7 +2254,7 @@ namespace MCNR
                                 Console.WriteLine("You strike true! Your weapon glints in the dim light.");
                                 Console.WriteLine("5 damage dealt!\n");
                                 Console.WriteLine("The Big Boss snarls in fury!\n");
-                                Thread.Sleep(1500);
+                                Thread.Sleep(750);
                                 break;
                             case 3:
                                 bossHP -= 10;
@@ -2262,7 +2263,7 @@ namespace MCNR
                                 Console.WriteLine("A fierce blow! You feel the ground shake as your strike lands.");
                                 Console.WriteLine("10 damage dealt!\n");
                                 Console.WriteLine("The Big Boss roars in pain!\n");
-                                Thread.Sleep(1500);
+                                Thread.Sleep(750);
                                 break;
                             default:
                                 bossHP -= 2;
@@ -2271,26 +2272,26 @@ namespace MCNR
                                 Console.WriteLine("You landed a glancing blow, but the Big Boss is still standing.");
                                 Console.WriteLine("2 damage dealt!\n");
                                 Console.WriteLine("The Big Boss glares at you, unfazed...\n");
-                                Thread.Sleep(1500);
+                                Thread.Sleep(750);
                                 break;
                         }
                         if (bossHP <= 200 && bossHP > 100)
                         {
                             Console.WriteLine("The Big Boss staggers slightly, but quickly regains composure.");
                             Console.WriteLine("“Is that all you’ve got? I will not fall so easily!”\n");
-                            Thread.Sleep(1500);
+                            Thread.Sleep(750);
                         }
                         else if (bossHP <= 100 && bossHP > 50)
                         {
                             Console.WriteLine("The Big Boss is visibly weakened, breathing heavily.");
                             Console.WriteLine("“You may have strength, but you lack resolve!”\n");
-                            Thread.Sleep(1500);
+                            Thread.Sleep(750);
                         }
                         else if (bossHP <= 50)
                         {
                             Console.WriteLine("The Big Boss lets out a furious roar, clearly enraged.");
                             Console.WriteLine("“I will not let you take my throne! Prepare for my final attack!”\n");
-                            Thread.Sleep(1500);
+                            Thread.Sleep(750);
                         }
                     }
                     else if (choice == 'i')

@@ -1142,16 +1142,10 @@ namespace MCNR
         static void EldrinPath()
         {
             Console.Clear();
-            Console.Write("\nEnter 'yes' if you are prepared to move onwards with your quest, or 'no' if you need more time: ");
+            Console.Write("\nEnter 'yes' if you are prepared to move onwards with your quest: ");
             string response = Console.ReadLine().ToLower();
 
             if (response == "yes")
-            {
-                Console.Clear();
-                Console.WriteLine("\n[Eldrin the Wise]: Very well! May your courage shine bright. Prepare yourself well; the battle ahead will be fierce!");
-                BossEncounter();
-            }
-            else if (response == "no")
             {
                 Console.Clear();
                 Console.WriteLine("\n[Eldrin the Wise]: I thought so. The path ahead is fraught with danger.");
@@ -2322,13 +2316,17 @@ namespace MCNR
 
         {
 
-            string deathTitle = @" #     # ####### #     #    ######  ### ####### ######  
-  #   #  #     # #     #    #     #  #  #       #     # 
-   # #   #     # #     #    #     #  #  #       #     # 
-    #    #     # #     #    #     #  #  #####   #     # 
-    #    #     # #     #    #     #  #  #       #     # 
-    #    #     # #     #    #     #  #  #       #     # 
-    #    #######  #####     ######  ### ####### ######  
+            string deathTitle = @"                                                                    
+@@@ @@@   @@@@@@   @@@  @@@     @@@@@@@   @@@  @@@@@@@@  @@@@@@@   
+@@@ @@@  @@@@@@@@  @@@  @@@     @@@@@@@@  @@@  @@@@@@@@  @@@@@@@@  
+@@! !@@  @@!  @@@  @@!  @@@     @@!  @@@  @@!  @@!       @@!  @@@  
+!@! @!!  !@!  @!@  !@!  @!@     !@!  @!@  !@!  !@!       !@!  @!@  
+ !@!@!   @!@  !@!  @!@  !@!     @!@  !@!  !!@  @!!!:!    @!@  !@!  
+  @!!!   !@!  !!!  !@!  !!!     !@!  !!!  !!!  !!!!!:    !@!  !!!  
+  !!:    !!:  !!!  !!:  !!!     !!:  !!!  !!:  !!:       !!:  !!!  
+  :!:    :!:  !:!  :!:  !:!     :!:  !:!  :!:  :!:       :!:  !:!  
+   ::    ::::: ::  ::::: ::      :::: ::   ::   :: ::::   :::: ::  
+   :      : :  :    : :  :      :: :  :   :    : :: ::   :: :  :
 ";
 
             Console.WriteLine(deathTitle);

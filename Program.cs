@@ -2214,7 +2214,7 @@ namespace MCNR
             static void StartBossBattle()
             {
                 Random rand = new Random();
-                int playerHP = 1000;
+                int playerHP = 100;
 
                 int bossHP = 200;
                 do

@@ -629,7 +629,7 @@ namespace MCNR
 
             if (input == 3)
             {
-                playerHP = 50;
+                playerHP += 50;
                 potion -= 1;
 
                 Console.WriteLine($"Your health has been restored to {playerHP} points! <enter>");

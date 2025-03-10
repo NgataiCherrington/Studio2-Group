@@ -3,6 +3,7 @@ using System.Data.SqlTypes;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Text.Json;
+using NAudio.Wave;
 
 
 namespace MCNR
@@ -10,7 +11,11 @@ namespace MCNR
     
     internal class Program
     {
-         
+        static WaveOutEvent outputDevice;
+        static AudioFileReader audioFile;
+        static bool issoundOn = true;
+
+
         //ARRAY FOR INVENTORIES
         static string[] items = new string[15];
         static int[] counts = new int[15];
@@ -322,6 +327,9 @@ namespace MCNR
 
             // ========= ACTUAL FLOW OF THE GAME FOR MAIN ========= //
 
+            //Menu sound
+            Playsound("Menusoundtrack.wav");
+
             Menu();
             DeathScreen();
             Introduction();
@@ -469,6 +477,9 @@ namespace MCNR
 
             static void Introduction()
             {
+                //Ingame soundtrack
+                Playsound("ingamesound.wav");
+
                 string title = "Quest for the Lost Kingdom";
                 int borderWidth = title.Length + 6;
 
@@ -2421,6 +2432,25 @@ namespace MCNR
                 Environment.Exit(0);
             }
 
+            static void Playsound(string filePath)
+            {
+                if (!issoundOn)
+                {
+                    return;
+                }
+                outputDevice = new WaveOutEvent();
+                audioFile = new AudioFileReader(filePath);
+                outputDevice.Init(audioFile);
+                outputDevice.Play();
+            }
+
+            static void StopSound()
+            {
+                outputDevice?.Stop();
+                outputDevice?.Dispose();
+                audioFile?.Dispose();
+            }
+
             static void Menu()
             {
                 int input;
@@ -2441,6 +2471,7 @@ namespace MCNR
 
                         case 1:
 
+                            StopSound();
                             Introduction();
                             break;
 
@@ -2468,6 +2499,7 @@ namespace MCNR
 
                 } while (input != 0);
 
+
                 static void instructions()
                 {
                     Console.Clear();
@@ -2492,15 +2524,65 @@ namespace MCNR
                 }
                 static void options()
                 {
-                    Console.WriteLine("OPTIONS HERE");
+                    int input;
+
+                    do
+                    {
+                        Console.Clear();
+                        Console.WriteLine("SOUND ON/OFF");
+                        Console.WriteLine("1. Turn On Sound");
+                        Console.WriteLine("2. Turn Off Sound");
+                        Console.WriteLine("0. Back to Main Menu");
+                        input = Convert.ToInt32(Console.ReadLine());
+
+                        switch (input)
+                        {
+                            case 1:
+                                issoundOn = true; // Enable sound
+                                Console.WriteLine("Sound Enabled!");
+                                break;
+                            case 2:
+                                issoundOn = false; // Disable sound
+                                Console.WriteLine("Sound Disabled!");
+                                break;
+                            case 0:
+                                return; // Go back to main menu
+                        }
+
+                    } while (input != 0);
                 }
                 static void credits()
                 {
                     Console.WriteLine("credits here");
                 }
-                static void exit()
+                static void leavegame()
                 {
-                    Console.WriteLine("confirm they want to exit");
+                    Console.Clear();
+                    Console.WriteLine("Are you sure you want to exit? (Y/N)");
+
+
+                    string userInput = Console.ReadLine().ToUpper();
+
+                    if (userInput == "Y")
+                    {
+
+                        Console.WriteLine("Exiting...");
+                        Thread.Sleep(3000);
+                        Environment.Exit(0); 
+                    }
+                    else if (userInput == "N")
+                    {
+
+                        Console.WriteLine("Returning to main menu...");
+                        Thread.Sleep(3000);
+                        Menu();
+                    }
+                    else
+                    {
+
+                        Console.WriteLine("Invalid option. Please enter 'Y' for Yes or 'N' for No.");
+                        leavegame();
+                    }
                 }
             }
 

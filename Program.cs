@@ -88,6 +88,7 @@ namespace MCNR
                 string json = JsonSerializer.Serialize(checkpoints);
                 File.WriteAllText(checkpointFile, json);
                 Console.WriteLine($"Checkpoint {slot} saved!");
+                Console.WriteLine("Press 'Enter' to continue");
                 Console.ReadLine();
             }
 
@@ -97,11 +98,13 @@ namespace MCNR
                 if (slot < 1 || slot > 3)
                 {
                     Console.WriteLine("Invalid checkpoint slot. Choose 1, 2, or 3.");
+                    Console.WriteLine("Press 'Enter' to continue");
                     return null;
                 }
                 if (!File.Exists(checkpointFile))
                 {
                     Console.WriteLine("No checkpoints have been saved yet.");
+                    Console.WriteLine("Press 'Enter' to continue");
                     Console.ReadLine();
                     return null;
                 }
@@ -110,6 +113,7 @@ namespace MCNR
                 if (checkpoints == null || checkpoints.Length != 3)
                 {
                     Console.WriteLine("Error loading checkpoints.");
+                    Console.WriteLine("Press 'Enter' to continue");
                     Console.ReadLine();
                     return null;
                 }
@@ -117,10 +121,12 @@ namespace MCNR
                 if (state == null)
                 {
                     Console.WriteLine($"No checkpoint found in slot {slot}.");
+                    Console.WriteLine("Press 'Enter' to continue");
                 }
                 else
                 {
                     Console.WriteLine($"Checkpoint {slot} loaded!");
+                    Console.WriteLine("Press 'Enter' to continue");
                 }
                 Console.ReadLine();
                 return state;
